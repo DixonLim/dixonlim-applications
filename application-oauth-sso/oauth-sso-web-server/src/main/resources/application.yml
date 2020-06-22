@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: oauth-sso-web-server
+
+  redis: #Redis的配置
+    host: 127.0.0.1 # Redis服务器地址
+    port: 6379 # Redis服务器连接端口
+    database: 0 # Redis数据库索引（默认为0）
+    password: # Redis服务器连接密码（默认为空）
+
+  datasource: #数据源的配置
+    url: jdbc:mysql://localhost:3306/dixonlim_oauth_sso?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
+    username: root
+    password: lindexin
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa: #JPA的配置
+    show-sql: true
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+
+    # 遇到相同名字时，是否允许覆盖注册
+  main:
+    allow-bean-definition-overriding: true
+
+server:
+  port: 8763
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka/
+
+security:
+  oauth2:
+    client:
+      client-id: user-client
+      client-secret: user-secret-8888
+      user-authorization-uri: http://localhost:8762/oauth/authorize
+      access-token-uri: http://localhost:8762/oauth/token
+    resource:
+      id: user-client
+      user-info-uri: user-info
+    authorization:
+      check-token-access: http://localhost:8762/oauth/check_token
+
+
+
+

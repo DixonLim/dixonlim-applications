@@ -1,0 +1,26 @@
+<project xmlns = "http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation = "http://maven.apache.org/POM/4.0.0
+    http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.dixonlim.applications</groupId>
+    <artifactId>oauth-sso-service</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <description>Oauth2.0-SSO-JWT</description>
+
+    <parent>
+        <groupId>com.dixonlim.applications</groupId>
+        <artifactId>application-oauth-sso-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.dixonlim.applications</groupId>
+            <artifactId>oauth-sso-model</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
+</project>

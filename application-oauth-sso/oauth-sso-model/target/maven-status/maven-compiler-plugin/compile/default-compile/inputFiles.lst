@@ -1,0 +1,9 @@
+/Users/DixonLim/Workstations/DixonLim/applications/dixonlim-applications/application-oauth-sso/oauth-sso-model/src/main/java/com/dixonlim/oauth/model/BaseModel.java
+/Users/DixonLim/Workstations/DixonLim/applications/dixonlim-applications/application-oauth-sso/oauth-sso-model/src/main/java/com/dixonlim/oauth/repository/SysPermissionRepository.java
+/Users/DixonLim/Workstations/DixonLim/applications/dixonlim-applications/application-oauth-sso/oauth-sso-model/src/main/java/com/dixonlim/oauth/repository/SysRoleRepository.java
+/Users/DixonLim/Workstations/DixonLim/applications/dixonlim-applications/application-oauth-sso/oauth-sso-model/src/main/java/com/dixonlim/oauth/model/SysUser.java
+/Users/DixonLim/Workstations/DixonLim/applications/dixonlim-applications/application-oauth-sso/oauth-sso-model/src/main/java/com/dixonlim/oauth/model/SysPermission.java
+/Users/DixonLim/Workstations/DixonLim/applications/dixonlim-applications/application-oauth-sso/oauth-sso-model/src/main/java/com/dixonlim/oauth/repository/SysUserRoleRepository.java
+/Users/DixonLim/Workstations/DixonLim/applications/dixonlim-applications/application-oauth-sso/oauth-sso-model/src/main/java/com/dixonlim/oauth/repository/SysUserRepository.java
+/Users/DixonLim/Workstations/DixonLim/applications/dixonlim-applications/application-oauth-sso/oauth-sso-model/src/main/java/com/dixonlim/oauth/model/SysUserRole.java
+/Users/DixonLim/Workstations/DixonLim/applications/dixonlim-applications/application-oauth-sso/oauth-sso-model/src/main/java/com/dixonlim/oauth/model/SysRole.java
