@@ -11,6 +11,8 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 /**
@@ -22,40 +24,25 @@ import org.springframework.security.oauth2.provider.token.store.redis.RedisToken
 @EnableResourceServer
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
-    @Value("${security.oauth2.client.client-id}")
-    private String clientId;
 
-    @Value("${security.oauth2.client.client-secret}")
-    private String secret;
+    @Bean
+    public TokenStore jwtTokenStore() {
+        return new JwtTokenStore(jwtAccessTokenConverter());
+    }
 
-    @Value("${security.oauth2.authorization.check-token-access}")
-    private String checkTokenEndpointUrl;
+    @Bean
+    public JwtAccessTokenConverter jwtAccessTokenConverter() {
+        JwtAccessTokenConverter accessTokenConverter = new JwtAccessTokenConverter();
+        accessTokenConverter.setSigningKey("dev");
+        accessTokenConverter.setVerifierKey("dev");
+        return accessTokenConverter;
+    }
 
     @Autowired
-    private RedisConnectionFactory redisConnectionFactory;
-
-    @Bean
-    public TokenStore redisTokenStore (){
-        return new RedisTokenStore(redisConnectionFactory);
-    }
-    /**
-     * @Author DixonLim
-     * @Date 2020/6/22 10:31 下午
-     * @Param []
-     * @Return org.springframework.security.oauth2.provider.token.RemoteTokenServices
-     * @Description: 因为使用的是 redis 作为 token 的存储，所以需要特殊配置一下叫做 tokenService 的 Bean，通过这个 Bean 才能实现 token 的验证
-     */
-    @Bean
-    public RemoteTokenServices tokenService() {
-        RemoteTokenServices tokenService = new RemoteTokenServices();
-        tokenService.setClientId(clientId);
-        tokenService.setClientSecret(secret);
-        tokenService.setCheckTokenEndpointUrl(checkTokenEndpointUrl);
-        return tokenService;
-    }
+    private TokenStore jwtTokenStore;
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-        resources.tokenServices(tokenService());
+        resources.tokenStore(jwtTokenStore);
     }
 }

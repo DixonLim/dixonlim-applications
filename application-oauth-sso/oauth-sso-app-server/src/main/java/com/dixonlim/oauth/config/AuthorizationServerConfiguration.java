@@ -16,10 +16,15 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 import javax.sql.DataSource;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Auther: DixonLim
@@ -36,10 +41,16 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     private PasswordEncoder passwordEncoder;
     @Autowired
     private UserDetailsService securityUserDetailsService;
+//    @Autowired
+//    private TokenStore redisTokenStore;
     @Autowired
-    private TokenStore redisTokenStore;
+    private TokenStore jwtTokenStore;
+    @Autowired
+    private JwtAccessTokenConverter jwtAccessTokenConverter;
     @Autowired
     private DataSource dataSource;
+    @Autowired
+    private TokenEnhancer jwtTokenEnhancer;
 
     /**
      * @Author DixonLim
@@ -57,10 +68,17 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints)
             throws Exception {
+        TokenEnhancerChain	enhancerChain	= new TokenEnhancerChain();
+        List<TokenEnhancer> enhancerList	= new ArrayList<>();
+        enhancerList.add( jwtTokenEnhancer );
+        enhancerList.add( jwtAccessTokenConverter );
+        enhancerChain.setTokenEnhancers( enhancerList );
         endpoints.authenticationManager(authenticationManager) //调用此方法才能支持 password 模式
                 .userDetailsService(securityUserDetailsService)//设置用户验证服务
-                .tokenStore(redisTokenStore)//指定 token 的存储方式
-                .allowedTokenEndpointRequestMethods(HttpMethod.GET,HttpMethod.POST);
+//                .tokenStore(redisTokenStore)//指定 token 的存储方式
+                .tokenStore(jwtTokenStore)// 指定jwt token的方式
+                .tokenEnhancer( enhancerChain )
+                .accessTokenConverter(jwtAccessTokenConverter);
     }
 
     /**

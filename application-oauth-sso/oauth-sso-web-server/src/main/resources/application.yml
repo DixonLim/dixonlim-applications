@@ -40,10 +40,9 @@ security:
       user-authorization-uri: http://localhost:8762/oauth/authorize
       access-token-uri: http://localhost:8762/oauth/token
     resource:
-      id: user-client
-      user-info-uri: user-info
-    authorization:
-      check-token-access: http://localhost:8762/oauth/check_token
+      jwt:
+        key-uri: http://localhost:8762/oauth/token_key
+        key-value: dev
 
 
 
